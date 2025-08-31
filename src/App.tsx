@@ -58,7 +58,7 @@ export default function App() {
       setCurrentTextIndex(
         (prevIndex) => (prevIndex + 1) % rotatingTexts.length,
       );
-    }, 4000); // Change text every 4 seconds
+    }, 5000); // Change text every 4 seconds
 
     return () => clearInterval(interval);
   }, [rotatingTexts.length]);
@@ -81,30 +81,48 @@ export default function App() {
 
   const projects = [
     {
-      title: "ESP32-S3 Image Classifier with TensorFlow Lite",
+      title: "Hybrid Traffic Voilation Detection ",
       description:
-        "Built optimized CNN model for real-time inference on ESP32 microcontroller. Reduced model size by 75% through quantization and integrated MobileNet v1 architecture for efficient edge AI deployment.",
+        "Traffic Light & Zebra Crossing Detection with Violation Monitoring using YOLO V8. Quantized TFLite Model Pipeline for Embedded ML",
       tech: [
-        "ESP32",
+        "YOLO v8/PyTorch",
+        "OpenCV/NumPy/Matplotlib",
+        "Python, Flask",
+        "JSON(API comms)",
+        "OpenCV/NumPy/Matplotlib",
         "TensorFlow Lite",
         "CNN",
-        "MobileNet V1",
         "Quantization",
-        "C",
       ],
-      github: "#",
+      github: "https://github.com/Somnathjha007/Traffic-Violation-Detector-YOLOv8",
       demo: null,
     },
     {
-      title: "Edge-to-Cloud Traffic Violation Detection",
+      title: "Edge to Cloud Image Pipeline",
       description:
-        "Designed real-time violation detection pipeline using YOLOv8 computer vision. Implemented edge device image capture with cloud-based AI inference via Flask API for scalable traffic monitoring.",
+        "Designed real-time Image stream pipeline using HTTP . Implemented edge device image capture with cloud-based Flask server with API for scalable data collection",
       tech: [
-        "YOLOv8",
-        "Computer Vision",
+        "ESP32-S3",
+        "Embedded C",
         "Flask",
         "Python",
         "REST API",
+        "cURL",
+        "Git/Github",
+      ],
+      github: "https://github.com/Somnathjha007/Edge-to-Cloud-Image-Pipeline",
+      demo: null,
+    },
+    {
+      title: "Upcoming",
+      description:
+        "Under Devlopment -> Wizards are working , spells are being casted",
+      tech: [
+        "Magic",
+        "pixy dust",
+        "Prof Snape",
+        "Holy Water",
+        
       ],
       github: "#",
       demo: null,
