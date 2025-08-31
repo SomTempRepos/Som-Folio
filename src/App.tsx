@@ -15,7 +15,6 @@ import {
   Home,
   GraduationCap,
   Award,
-  Briefcase,
   Phone,
   Linkedin,
   Twitter,
@@ -27,19 +26,42 @@ import {
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+
+  const rotatingTexts = [
+    "Brewing AI elixirs with TensorFlow and PyTorch—sometimes it's wizardry, sometimes it's mad science, occasionally it even obeys.",
+    "Summoning neural networks like Dumbledore conjures Fawkes, with TensorFlow wands and PyTorch potions at my command.",
+    "Cooking up AI models in the lab—Breaking Bad style—but instead of blue meth, it's pure deep learning magic.",
+    "Casting spells in Python, chanting TensorFlow, and invoking PyTorch—because even Gandalf would approve of well-trained models.",
+    "AI whisperer: teaching GPUs to levitate data, making neural nets obey like Hogwarts first-years in detention.",
+  ];
 
   // Initialize theme from localStorage or default to dark
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
-      setIsDarkMode(savedTheme === 'dark');
+      setIsDarkMode(savedTheme === "dark");
     }
   }, []);
 
   // Save theme to localStorage and update when changed
   useEffect(() => {
-    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    localStorage.setItem(
+      "theme",
+      isDarkMode ? "dark" : "light",
+    );
   }, [isDarkMode]);
+
+  // Rotate through AI-themed texts
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTextIndex(
+        (prevIndex) => (prevIndex + 1) % rotatingTexts.length,
+      );
+    }, 4000); // Change text every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [rotatingTexts.length]);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -49,7 +71,7 @@ export default function App() {
     { name: "C", icon: Code },
     { name: "C++", icon: Code },
     { name: "Python", icon: Code },
-    { name: "Go", icon: Code },
+    { name: "GoLang", icon: Code },
     { name: "Linux & LDD", icon: Terminal },
     { name: "Embedded AI", icon: Bot },
     { name: "ESP32/Arduino", icon: Cpu },
@@ -57,46 +79,19 @@ export default function App() {
     { name: "MySQL/MongoDB", icon: Database },
   ];
 
-  const experiences = [
-    {
-      position: "Associate Software Engineer",
-      company: "Bosch Global Software Technologies",
-      duration: "October 2024 - Present",
-      location: "Pune, India",
-      description:
-        "Developed embedded solutions optimized for deployment on automotive SoCs. Designed and deployed modules connecting edge devices with cloud backends.",
-      projects: [
-        "Embedded solutions for automotive SoCs",
-        "Edge-to-cloud device connectivity modules",
-        "Scalable automotive system architecture",
-      ],
-      tech: [
-        "C",
-        "C++",
-        "Python",
-        "TensorFlow Lite",
-      ],
-    },
-    {
-      position: "Industrial Trainee",
-      company: "SAIL (Steel Authority of India Limited)",
-      duration: "February 2023 - June 2023",
-      location: "Dhanbad, India",
-      description:
-        "Managed PLC control room operations and maintenance. Conducted quality control assessments for mining rigs and industrial equipment. Gained experience in industrial automation and large-scale system reliability.",
-      projects: [
-        "PLC control room operations management",
-      ],
-      tech: ["PLC", "Industrial Automation", "System Monitoring"],
-    },
-  ];
-
   const projects = [
     {
       title: "ESP32-S3 Image Classifier with TensorFlow Lite",
       description:
         "Built optimized CNN model for real-time inference on ESP32 microcontroller. Reduced model size by 75% through quantization and integrated MobileNet v1 architecture for efficient edge AI deployment.",
-      tech: ["ESP32", "TensorFlow Lite", "CNN", "MobileNet V1", "Quantization", "C"],
+      tech: [
+        "ESP32",
+        "TensorFlow Lite",
+        "CNN",
+        "MobileNet V1",
+        "Quantization",
+        "C",
+      ],
       github: "#",
       demo: null,
     },
@@ -104,7 +99,13 @@ export default function App() {
       title: "Edge-to-Cloud Traffic Violation Detection",
       description:
         "Designed real-time violation detection pipeline using YOLOv8 computer vision. Implemented edge device image capture with cloud-based AI inference via Flask API for scalable traffic monitoring.",
-      tech: ["YOLOv8", "Computer Vision", "Flask", "Python", "REST API"],
+      tech: [
+        "YOLOv8",
+        "Computer Vision",
+        "Flask",
+        "Python",
+        "REST API",
+      ],
       github: "#",
       demo: null,
     },
@@ -112,23 +113,29 @@ export default function App() {
 
   const education = [
     {
-      degree: "Bachelor of Technology - Electronics and Communication Engineering",
-      institution: "Chandigarh Engineering College, Punjab Technical University",
-      year: "2019-2023",
-      description:
-        "GPA: 7.9/10 - Focus on embedded systems, signal processing, and communication technologies",
+      degree:
+        "B.Tech",
+      description: "Electronics and Communication Engineering",
     },
     {
-      degree: "Higher Secondary Certificate - Non-Medical",
-      institution: "Holy Cross School (CBSE)",
-      year: "2016-2018",
-      description:
-        "Strong foundation in Mathematics, Physics, and Chemistry",
+      degree: "Higher Secondary",
+      description: "Non-Medical",
     },
   ];
 
   const certificates = [
-    // No certificates mentioned in resume - will hide this section
+    {
+      title: "LINUX for Cloud",
+      issuer: "Udemy",
+      year: "2025",
+      link: "https://www.udemy.com/certificate/UC-263a3ce9-5cdd-467c-a960-95bf52e237e0/",
+    },
+    {
+      title: "Git and Github Essentials",
+      issuer: "Udemy",
+      year: "2025",
+      link: "https://www.udemy.com/certificate/UC-f48b7341-ed77-45ea-9258-4de66d32b90d/",
+    },
   ];
 
   const contactMethods = [
@@ -148,7 +155,7 @@ export default function App() {
     },
     {
       label: "GitHub",
-      value: "@somnath-jha",
+      value: "@somnathjha007",
       icon: Github,
       link: "https://github.com/somnathjha007",
       description: "Check out my code",
@@ -177,7 +184,9 @@ export default function App() {
   };
 
   return (
-    <div className={`${isDarkMode ? 'dark' : ''} min-h-screen bg-background text-foreground`}>
+    <div
+      className={`${isDarkMode ? "dark" : ""} min-h-screen bg-background text-foreground`}
+    >
       {/* Fixed Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
         <div className="max-w-4xl mx-auto px-4 py-4">
@@ -242,26 +251,56 @@ export default function App() {
               <h2 className="text-xl md:text-2xl text-muted-foreground">
                 Backend Developer & Systems Engineer
               </h2>
-              <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-                Software Engineer with expertise in embedded systems, backend development, and Linux system programming. Passionate about developing AI solutions for automotive edge deployment, cloud integration, and scalable system architecture.
-              </p>
+              <div className="space-y-4 max-w-2xl mx-auto">
+                <p className="text-base md:text-lg text-muted-foreground">
+                  Software engineer fluent in embedded sorcery,
+                  backend alchemy, and Linux whispering.
+                </p>
+                <p className="text-sm md:text-base text-muted-foreground/80 transition-opacity duration-500 min-h-[3rem] flex items-center justify-center">
+                  {rotatingTexts[currentTextIndex]}
+                </p>
+              </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex gap-4 justify-center items-center">
               <Button
-                variant="default"
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
-                onClick={() => window.open("mailto:somnath.jha.official@gmail.com", "_blank")}
+                variant="ghost"
+                size="lg"
+                className="hover:bg-accent hover:text-primary"
+                onClick={() =>
+                  window.open(
+                    "mailto:somnath.jha.official@gmail.com",
+                    "_blank",
+                  )
+                }
               >
-                <Mail className="mr-2 h-4 w-4" />
-                Get in touch
+                <Mail className="h-6 w-6" />
               </Button>
               <Button
-                variant="outline"
-                className="border-border hover:bg-accent"
+                variant="ghost"
+                size="lg"
+                className="hover:bg-accent hover:text-primary"
+                onClick={() =>
+                  window.open(
+                    "https://linkedin.com/in/somnath-jhaa",
+                    "_blank",
+                  )
+                }
               >
-                <FileText className="mr-2 h-4 w-4" />
-                Download Resume
+                <Linkedin className="h-6 w-6" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="lg"
+                className="hover:bg-accent hover:text-primary"
+                onClick={() =>
+                  window.open(
+                    "https://github.com/somnathjha007",
+                    "_blank",
+                  )
+                }
+              >
+                <Github className="h-6 w-6" />
               </Button>
             </div>
           </div>
@@ -275,111 +314,21 @@ export default function App() {
               Skills
             </h2>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+            <div className="flex flex-wrap justify-center gap-3">
               {skills.map((skill, index) => {
                 const IconComponent = skill.icon;
                 return (
-                  <Card
+                  <div
                     key={index}
-                    className="bg-card border-border p-6 hover:border-primary/50 transition-colors"
+                    className="flex items-center space-x-2 px-4 py-2 bg-card border border-border rounded-full hover:border-primary/50 transition-colors"
                   >
-                    <div className="flex items-center space-x-3">
-                      <IconComponent className="h-6 w-6 text-primary" />
-                      <span className="text-lg">
-                        {skill.name}
-                      </span>
-                    </div>
-                  </Card>
+                    <IconComponent className="h-4 w-4 text-primary" />
+                    <span className="text-sm">
+                      {skill.name}
+                    </span>
+                  </div>
                 );
               })}
-            </div>
-          </div>
-        </section>
-
-        {/* Experience Section */}
-        <section className="py-20 px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl md:text-3xl mb-12 text-center">
-              <span className="text-primary">function</span>{" "}
-              workExperience(){" "}
-              <span className="text-primary">{"{"}</span>
-            </h2>
-
-            <div className="space-y-8">
-              {experiences.map((exp, index) => (
-                <Card
-                  key={index}
-                  className="bg-card border-border p-6 hover:border-primary/50 transition-colors"
-                >
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <Briefcase className="h-5 w-5 text-primary mt-1" />
-                      <div className="flex-1">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                          <div>
-                            <h3 className="text-xl">
-                              {exp.position}
-                            </h3>
-                            <p className="text-muted-foreground">
-                              {exp.company} • {exp.location}
-                            </p>
-                          </div>
-                          <span className="text-sm text-muted-foreground px-3 py-1 bg-muted rounded border border-border">
-                            {exp.duration}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <p className="text-muted-foreground leading-relaxed ml-8">
-                      {exp.description}
-                    </p>
-
-                    <div className="ml-8 space-y-3">
-                      <div>
-                        <h4 className="text-sm text-primary mb-2">
-                          Key Projects:
-                        </h4>
-                        <ul className="text-sm text-muted-foreground space-y-1">
-                          {exp.projects.map(
-                            (project, projIndex) => (
-                              <li
-                                key={projIndex}
-                                className="flex items-start"
-                              >
-                                <span className="text-primary mr-2">
-                                  •
-                                </span>
-                                {project}
-                              </li>
-                            ),
-                          )}
-                        </ul>
-                      </div>
-
-                      <div>
-                        <h4 className="text-sm text-primary mb-2">
-                          Tech Stack:
-                        </h4>
-                        <div className="flex flex-wrap gap-2">
-                          {exp.tech.map((tech, techIndex) => (
-                            <span
-                              key={techIndex}
-                              className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded border border-border"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-
-            <div className="mt-8 text-center">
-              <span className="text-primary">{"}"}</span>
             </div>
           </div>
         </section>
@@ -388,7 +337,7 @@ export default function App() {
         <section className="py-20 px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl md:text-3xl mb-12 text-center">
-              <span className="text-primary">/*</span>
+              <span className="text-primary">/* </span>
               Projects <span className="text-primary">*/</span>
             </h2>
 
@@ -446,46 +395,96 @@ export default function App() {
           </div>
         </section>
 
-        {/* Education Section */}
+        {/* Education and Certifications Section */}
         <section className="py-20 px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl md:text-3xl mb-12 text-center">
-              <span className="text-primary">class</span>{" "}
-              Education{" "}
-              <span className="text-primary">{"{"}</span>
-            </h2>
+            <div className="grid md:grid-cols-2 gap-12">
+              {/* Education */}
+              <div>
+                <h2 className="text-xl md:text-2xl mb-8">
+                  <span className="text-primary">class</span>{" "}
+                  Education{" "}
+                  <span className="text-primary">{"{"}</span>
+                </h2>
 
-            <div className="space-y-6">
-              {education.map((edu, index) => (
-                <Card
-                  key={index}
-                  className="bg-card border-border p-6 hover:border-primary/50 transition-colors"
-                >
-                  <div className="space-y-3">
-                    <div className="flex items-start space-x-3">
-                      <GraduationCap className="h-5 w-5 text-primary mt-1" />
-                      <div className="flex-1">
-                        <h3 className="text-lg">
-                          {edu.degree}
-                        </h3>
-                        <p className="text-muted-foreground">
-                          {edu.institution}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          {edu.year}
+                <div className="space-y-6">
+                  {education.map((edu, index) => (
+                    <Card
+                      key={index}
+                      className="bg-card border-border p-6 hover:border-primary/50 transition-colors"
+                    >
+                      <div className="space-y-3">
+                        <div className="flex items-start space-x-3">
+                          <GraduationCap className="h-5 w-5 text-primary mt-1" />
+                          <div className="flex-1">
+                            <h3 className="text-lg">
+                              {edu.degree}
+                            </h3>
+                          </div>
+                        </div>
+                        <p className="text-muted-foreground text-sm leading-relaxed ml-8">
+                          {edu.description}
                         </p>
                       </div>
-                    </div>
-                    <p className="text-muted-foreground text-sm leading-relaxed ml-8">
-                      {edu.description}
-                    </p>
-                  </div>
-                </Card>
-              ))}
-            </div>
+                    </Card>
+                  ))}
+                </div>
 
-            <div className="mt-8 text-center">
-              <span className="text-primary">{"}"}</span>
+                <div className="mt-8 text-center">
+                  <span className="text-primary">{"}"}</span>
+                </div>
+              </div>
+
+              {/* Certifications */}
+              <div>
+                <h2 className="text-xl md:text-2xl mb-8">
+                  <span className="text-primary">class</span>{" "}
+                  Certifications{" "}
+                  <span className="text-primary">{"{"}</span>
+                </h2>
+
+                <div className="space-y-6">
+                  {certificates.map((cert, index) => (
+                    <Card
+                      key={index}
+                      className="bg-card border-border p-6 hover:border-primary/50 transition-colors"
+                    >
+                      <div className="space-y-4">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex items-start space-x-3 flex-1">
+                            <Award className="h-5 w-5 text-primary mt-1" />
+                            <div className="flex-1">
+                              <h3 className="text-lg">
+                                {cert.title}
+                              </h3>
+                              <p className="text-muted-foreground">
+                                {cert.issuer}
+                              </p>
+                              <p className="text-sm text-muted-foreground">
+                                {cert.year}
+                              </p>
+                            </div>
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="border-border hover:bg-accent flex-shrink-0"
+                            onClick={() =>
+                              window.open(cert.link, "_blank")
+                            }
+                          >
+                            <ExternalLink className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+
+                <div className="mt-8 text-center">
+                  <span className="text-primary">{"}"}</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -578,33 +577,8 @@ export default function App() {
                   Available for new opportunities
                 </p>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Based in Pune, India • Open to remote
-                  work
+                  Based in Pune, India • Open to remote work
                 </p>
-              </div>
-
-              <div className="flex gap-4">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="hover:bg-accent hover:text-primary"
-                >
-                  <Github className="h-5 w-5" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="hover:bg-accent hover:text-primary"
-                >
-                  <Mail className="h-5 w-5" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="hover:bg-accent hover:text-primary"
-                >
-                  <ExternalLink className="h-5 w-5" />
-                </Button>
               </div>
             </div>
 
