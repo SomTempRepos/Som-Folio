@@ -93,7 +93,7 @@ export default function App() {
 
   const projects = [
     {
-      title: "ESP32 Image Classifier with TensorFlow Lite",
+      title: "ESP32-S3 Image Classifier with TensorFlow Lite",
       description:
         "Built optimized CNN model for real-time inference on ESP32 microcontroller. Reduced model size by 75% through quantization and integrated MobileNet v1 architecture for efficient edge AI deployment.",
       tech: ["ESP32", "TensorFlow Lite", "CNN", "MobileNet V1", "Quantization", "C"],
@@ -101,7 +101,7 @@ export default function App() {
       demo: null,
     },
     {
-      title: "Hybrid Edge-to-Cloud Traffic Violation Detection",
+      title: "Edge-to-Cloud Traffic Violation Detection",
       description:
         "Designed real-time violation detection pipeline using YOLOv8 computer vision. Implemented edge device image capture with cloud-based AI inference via Flask API for scalable traffic monitoring.",
       tech: ["YOLOv8", "Computer Vision", "Flask", "Python", "REST API"],
@@ -150,7 +150,7 @@ export default function App() {
       label: "GitHub",
       value: "@somnath-jha",
       icon: Github,
-      link: "https://github.com/somnath-jha",
+      link: "https://github.com/somnathjha007",
       description: "Check out my code",
     },
     {
