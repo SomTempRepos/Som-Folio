@@ -124,7 +124,7 @@ export default function App() {
         "Holy Water",
         
       ],
-      github: "#",
+      github: null,
       demo: null,
     },
   ];
@@ -375,6 +375,9 @@ export default function App() {
                           size="sm"
                           variant="outline"
                           className="border-border hover:bg-accent"
+                          onClick={() =>
+                              window.open(project.github, "_blank")
+                            }
                         >
                           <Github className="mr-2 h-4 w-4" />
                           Code
