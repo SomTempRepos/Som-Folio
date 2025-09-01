@@ -1,6 +1,7 @@
 import { Card } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { useState, useEffect } from "react";
+import './styles/globals.css'
 import {
   ExternalLink,
   Github,
@@ -63,10 +64,12 @@ export default function App() {
     return () => clearInterval(interval);
   }, [rotatingTexts.length]);
 
+  //Dark/Light Mode Theme
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
 
+  //Skills Secton
   const skills = [
     { name: "C", icon: Code },
     { name: "C++", icon: Code },
@@ -79,9 +82,10 @@ export default function App() {
     { name: "MySQL/MongoDB", icon: Database },
   ];
 
+  //Project Section -> Linear order list
   const projects = [
     {
-      title: "Hybrid Traffic Voilation Detection ",
+      title: "Hybrid Traffic Violation Detection",
       description:
         "Traffic Light & Zebra Crossing Detection with Violation Monitoring using YOLO V8. Quantized TFLite Model Pipeline for Embedded ML",
       tech: [
@@ -100,7 +104,7 @@ export default function App() {
     {
       title: "Edge to Cloud Image Pipeline",
       description:
-        "Designed real-time Image stream pipeline using HTTP . Implemented edge device image capture with cloud-based Flask server with API for scalable data collection",
+        "Implemented edge device image capture with cloud-based Flask server. Integrated with FlaskAPI endpoint for scalable data collection",
       tech: [
         "ESP32-S3",
         "Embedded C",
@@ -124,11 +128,12 @@ export default function App() {
         "Holy Water",
         
       ],
-      github: null,
+      github: "#",
       demo: null,
     },
   ];
 
+  //Education Section -> Linear order list
   const education = [
     {
       degree:
@@ -141,6 +146,7 @@ export default function App() {
     },
   ];
 
+  // Certificate Section -> Linear order list
   const certificates = [
     {
       title: "LINUX for Cloud",
@@ -155,7 +161,7 @@ export default function App() {
       link: "https://www.udemy.com/certificate/UC-f48b7341-ed77-45ea-9258-4de66d32b90d/",
     },
   ];
-
+  //Contact Me
   const contactMethods = [
     {
       label: "Email",
@@ -187,6 +193,7 @@ export default function App() {
     },
   ];
 
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -200,420 +207,429 @@ export default function App() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-
   return (
     <div
       className={`${isDarkMode ? "dark" : ""} min-h-screen bg-background text-foreground`}
-    >
-      {/* Fixed Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-1">
-              <span className="text-primary">$</span>
-              <span className="text-lg">Som.dev</span>
-            </div>
+      >
+        {/* Subtle code background */}
+        <div className="fixed inset-0 code-bg opacity-30 pointer-events-none z-0" />
+        
+        {/* Fixed Navbar */}
+        <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/20 shadow-lg backdrop-blur-lg bg-white/10 dark:bg-black/20">
+          <div className="max-w-4xl mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-1">
+                <span className="text-primary">$</span>
+                <span className="text-lg">Som.dev</span>
+              </div>
 
-            <div className="flex items-center space-x-6">
-              <button
-                onClick={() => scrollToSection("home")}
-                className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors"
-              >
-                <Home className="h-4 w-4" />
-                <span>Home</span>
-              </button>
+              <div className="flex items-center space-x-6">
+                <button
+                  onClick={() => scrollToSection("home")}
+                  className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <Home className="h-4 w-4" />
+                  <span>Home</span>
+                </button>
 
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={scrollToContact}
-                className="border-border hover:bg-accent hover:border-primary/50"
-              >
-                <Mail className="mr-2 h-4 w-4" />
-                Contact
-              </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={scrollToContact}
+                  className="border-white/30 hover:bg-white/20 hover:border-primary/50"
+                >
+                  <Mail className="mr-2 h-4 w-4" />
+                  Contact
+                </Button>
 
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={toggleTheme}
-                className="hover:bg-accent hover:text-primary"
-                aria-label="Toggle theme"
-              >
-                {isDarkMode ? (
-                  <Sun className="h-4 w-4" />
-                ) : (
-                  <Moon className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Subtle code background */}
-      <div className="fixed inset-0 code-bg opacity-30 pointer-events-none" />
-
-      <div className="relative z-10 pt-20">
-        {/* Hero Section */}
-        <section
-          id="home"
-          className="min-h-screen flex items-center justify-center px-4"
-        >
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <div className="space-y-4">
-              <h1 className="text-4xl md:text-6xl tracking-tight">
-                <span className="text-primary">$</span> Somnath
-                Jha<span className="cursor"></span>
-              </h1>
-              <h2 className="text-xl md:text-2xl text-muted-foreground">
-                Backend Developer & Systems Engineer
-              </h2>
-              <div className="space-y-4 max-w-2xl mx-auto">
-                <p className="text-base md:text-lg text-muted-foreground">
-                  Software engineer fluent in embedded sorcery,
-                  backend alchemy, and Linux whispering.
-                </p>
-                <p className="text-sm md:text-base text-muted-foreground/80 transition-opacity duration-500 min-h-[3rem] flex items-center justify-center">
-                  {rotatingTexts[currentTextIndex]}
-                </p>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={toggleTheme}
+                  className="hover:bg-white/20 hover:text-primary"
+                  aria-label="Toggle theme"
+                >
+                  {isDarkMode ? (
+                    <Sun className="h-4 w-4" />
+                  ) : (
+                    <Moon className="h-4 w-4" />
+                  )}
+                </Button>
               </div>
             </div>
-
-            <div className="flex gap-4 justify-center items-center">
-              <Button
-                variant="ghost"
-                size="lg"
-                className="hover:bg-accent hover:text-primary"
-                onClick={() =>
-                  window.open(
-                    "mailto:somnath.jha.official@gmail.com",
-                    "_blank",
-                  )
-                }
-              >
-                <Mail className="h-6 w-6" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="lg"
-                className="hover:bg-accent hover:text-primary"
-                onClick={() =>
-                  window.open(
-                    "https://linkedin.com/in/somnath-jhaa",
-                    "_blank",
-                  )
-                }
-              >
-                <Linkedin className="h-6 w-6" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="lg"
-                className="hover:bg-accent hover:text-primary"
-                onClick={() =>
-                  window.open(
-                    "https://github.com/somnathjha007",
-                    "_blank",
-                  )
-                }
-              >
-                <Github className="h-6 w-6" />
-              </Button>
-            </div>
           </div>
-        </section>
+        </nav>
 
-        {/* Skills Section */}
-        <section className="py-20 px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl md:text-3xl mb-12 text-center">
-              <span className="text-primary">//</span> Technical
-              Skills
-            </h2>
+        
+        <div className="relative z-10 pt-20">
 
-            <div className="flex flex-wrap justify-center gap-3">
-              {skills.map((skill, index) => {
-                const IconComponent = skill.icon;
-                return (
-                  <div
-                    key={index}
-                    className="flex items-center space-x-2 px-4 py-2 bg-card border border-border rounded-full hover:border-primary/50 transition-colors"
-                  >
-                    <IconComponent className="h-4 w-4 text-primary" />
-                    <span className="text-sm">
-                      {skill.name}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
+          {/* Hero Section */}
+          <section
+            id="home"
+            className="min-h-screen flex items-center justify-center px-4"
+          >
+            <div className="max-w-4xl mx-auto text-center space-y-8">
+              <div className="space-y-4">
+                <h1 className="text-4xl md:text-6xl tracking-tight">
+                  <span className="text-primary">$</span> Somnath
+                  Jha<span className="cursor md:text-6xl tracking-tight"></span>
+                </h1>
+                <h2 className="text-xl md:text-2xl text-muted-foreground">
+                  Backend Developer & Systems Engineer
+                </h2>
+                <div className="space-y-4 max-w-2xl mx-auto">
+                  <p className="text-base md:text-lg text-muted-foreground">
+                    Software engineer fluent in embedded sorcery,
+                    backend alchemy, and Linux whispering.
+                  </p>
+                  <Card className="bg-card border-border p-4 hover:border-primary/50 transition-colors">
+                  <p className="text-sm md:text-base text-muted-foreground/80 transition-opacity duration-500 min-h-[3rem] flex items-center justify-center">
+                    {rotatingTexts[currentTextIndex]}
+                  </p>
+                  </Card>
+                </div>
+              </div>
 
-        {/* Projects Section */}
-        <section className="py-20 px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl md:text-3xl mb-12 text-center">
-              <span className="text-primary">/* </span>
-              Projects <span className="text-primary">*/</span>
-            </h2>
-
-            <div className="space-y-8">
-              {projects.map((project, index) => (
-                <Card
-                  key={index}
-                  className="bg-card border-border p-6 hover:border-primary/50 transition-colors"
+              <div className="flex gap-4 justify-center items-center">
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  className="hover:bg-accent hover:text-primary"
+                  onClick={() =>
+                    window.open(
+                      "mailto:somnath.jha.official@gmail.com",
+                      "_blank",
+                    )
+                  }
                 >
-                  <div className="space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                      <h3 className="text-xl">
-                        {project.title}
-                      </h3>
-                      <div className="flex gap-2">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="border-border hover:bg-accent"
-                          onClick={() =>
-                              window.open(project.github, "_blank")
-                            }
-                        >
-                          <Github className="mr-2 h-4 w-4" />
-                          Code
-                        </Button>
-                        {project.demo && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="border-border hover:bg-accent"
-                          >
-                            <ExternalLink className="mr-2 h-4 w-4" />
-                            Demo
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-
-                    <p className="text-muted-foreground leading-relaxed">
-                      {project.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="px-3 py-1 bg-muted text-muted-foreground text-sm rounded border border-border"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </Card>
-              ))}
+                  <Mail className="h-6 w-6" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  className="hover:bg-accent hover:text-primary"
+                  onClick={() =>
+                    window.open(
+                      "https://linkedin.com/in/somnath-jhaa",
+                      "_blank",
+                    )
+                  }
+                >
+                  <Linkedin className="h-6 w-6" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  className="hover:bg-accent hover:text-primary"
+                  onClick={() =>
+                    window.open(
+                      "https://github.com/somnathjha007",
+                      "_blank",
+                    )
+                  }
+                >
+                  <Github className="h-6 w-6" />
+                </Button>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Education and Certifications Section */}
-        <section className="py-20 px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12">
-              {/* Education */}
-              <div>
-                <h2 className="text-xl md:text-2xl mb-8">
-                  <span className="text-primary">class</span>{" "}
-                  Education{" "}
-                  <span className="text-primary">{"{"}</span>
+          {/* Skills Section */}
+          <section className="py-20 px-4">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-2xl md:text-3xl mb-12 text-center">
+                <span className="text-primary">//</span> Technical
+                Skills
+              </h2>
+
+              <div className="flex flex-wrap justify-center gap-3">
+                {skills.map((skill, index) => {
+                  const IconComponent = skill.icon;
+                  return (
+                    <div
+                      key={index}
+                      className="flex items-center space-x-2 px-4 py-2 bg-card border border-border rounded-full hover:border-primary/50 transition-colors"
+                    >
+                      <IconComponent className="h-4 w-4 text-primary" />
+                      <span className="text-sm">
+                        {skill.name}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+
+          {/* Projects Section */}
+          <section className="py-20 px-4">
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-2xl md:text-3xl mb-12 text-center">
+                  <span className="text-primary">/* </span>
+                  Projects <span className="text-primary">*/</span>
                 </h2>
 
-                <div className="space-y-6">
-                  {education.map((edu, index) => (
+                <div className="space-y-8">
+                  {projects.map((project, index) => (
+                    <Card
+                      key={index}
+                      className="bg-card border-border p-6 hover:border-primary/50 transition-colors"
+                    >
+                      <div className="space-y-4">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                          <h3 className="text-xl">{project.title}</h3>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-border hover:bg-accent"
+                              onClick={() =>
+                                project.github && window.open(project.github, "_blank")
+                              }
+                            >
+                              <Github className="mr-2 h-4 w-4" />
+                              Code
+                            </Button>
+                            {project.demo && (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="border-border hover:bg-accent"
+                              >
+                                <ExternalLink className="mr-2 h-4 w-4" />
+                                Demo
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* 🔹 Description as bullet points */}
+                        <ul className="list-disc list-inside text-muted-foreground leading-relaxed space-y-1">
+                          {project.description.split(".").map(
+                            (point, idx) =>
+                              point.trim() && <li key={idx}>{point.trim()}</li>
+                          )}
+                        </ul>
+
+                        {/* 🔹 Tech Stack subheading */}
+                        <h4 className="text-lg  mt-4">Tech Stack:</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {project.tech.map((tech, techIndex) => (
+                            <span
+                              key={techIndex}
+                              className="px-3 py-1 bg-muted text-muted-foreground text-sm rounded border border-border"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+          </section>
+
+
+          {/* Education and Certifications Section */}
+          <section className="py-20 px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                {/* Education */}
+                <div className="w-full">
+                  <h2 className="text-xl md:text-2xl mb-8">
+                    <span className="text-primary">class</span>{" "}
+                    Education{" "}
+                    <span className="text-primary">{"{"}</span>
+                  </h2>
+
+                  <div className="space-y-6">
+                    {education.map((edu, index) => (
+                      <Card
+                        key={index}
+                        className="bg-card border-border p-6 hover:border-primary/50 transition-colors w-full"
+                      >
+                        <div className="space-y-3">
+                          <div className="flex items-start space-x-3">
+                            <GraduationCap className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <h3 className="text-lg break-words">
+                                {edu.degree}
+                              </h3>
+                            </div>
+                          </div>
+                          <p className="text-muted-foreground text-sm leading-relaxed ml-8 break-words">
+                            {edu.description}
+                          </p>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+
+                  <div className="mt-8 text-center">
+                    <span className="text-primary">{"}"}</span>
+                  </div>
+                </div>
+
+                {/* Certifications */}
+                <div className="w-full">
+                  <h2 className="text-xl md:text-2xl mb-8">
+                    <span className="text-primary">class</span>{" "}
+                    Certifications{" "}
+                    <span className="text-primary">{"{"}</span>
+                  </h2>
+
+                  <div className="space-y-6">
+                    {certificates.map((cert, index) => (
+                      <Card
+                        key={index}
+                        className="bg-card border-border p-6 hover:border-primary/50 transition-colors w-full"
+                      >
+                        <div className="space-y-4">
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex items-start space-x-3 flex-1 min-w-0">
+                              <Award className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                              <div className="flex-1 min-w-0">
+                                <h3 className="text-lg break-words">
+                                  {cert.title}
+                                </h3>
+                                <p className="text-muted-foreground break-words">
+                                  {cert.issuer}
+                                </p>
+                                <p className="text-sm text-muted-foreground">
+                                  {cert.year}
+                                </p>
+                              </div>
+                            </div>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-border hover:bg-accent flex-shrink-0"
+                              onClick={() =>
+                                window.open(cert.link, "_blank")
+                              }
+                            >
+                              <ExternalLink className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+
+                  <div className="mt-8 text-center">
+                    <span className="text-primary">{"}"}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Contact Me Section */}
+          <section id="contact" className="py-20 px-4">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-2xl md:text-3xl mb-12 text-center">
+                <span className="text-primary">void</span>{" "}
+                contactMe(){" "}
+                <span className="text-primary">{"{"}</span>
+              </h2>
+
+              <div className="grid md:grid-cols-2 gap-6 mb-8">
+                {contactMethods.map((contact, index) => {
+                  const IconComponent = contact.icon;
+                  return (
                     <Card
                       key={index}
                       className="bg-card border-border p-6 hover:border-primary/50 transition-colors"
                     >
                       <div className="space-y-3">
                         <div className="flex items-start space-x-3">
-                          <GraduationCap className="h-5 w-5 text-primary mt-1" />
+                          <IconComponent className="h-5 w-5 text-primary mt-1" />
                           <div className="flex-1">
                             <h3 className="text-lg">
-                              {edu.degree}
+                              {contact.label}
                             </h3>
+                            {contact.link ? (
+                              <a
+                                href={contact.link}
+                                className="text-muted-foreground hover:text-primary transition-colors block"
+                                target={
+                                  contact.link.startsWith("http")
+                                    ? "_blank"
+                                    : undefined
+                                }
+                                rel={
+                                  contact.link.startsWith("http")
+                                    ? "noopener noreferrer"
+                                    : undefined
+                                }
+                              >
+                                {contact.value}
+                              </a>
+                            ) : (
+                              <p className="text-muted-foreground">
+                                {contact.value}
+                              </p>
+                            )}
                           </div>
                         </div>
                         <p className="text-muted-foreground text-sm leading-relaxed ml-8">
-                          {edu.description}
+                          {contact.description}
                         </p>
                       </div>
                     </Card>
-                  ))}
-                </div>
+                  );
+                })}
+              </div>
 
-                <div className="mt-8 text-center">
-                  <span className="text-primary">{"}"}</span>
+              <div className="text-center space-y-6">
+                <div className="space-y-4">
+                  <p className="text-muted-foreground">
+                    <span className="text-primary">printf(</span>
+                    "Let's build something amazing together!"
+                    <span className="text-primary">);</span>
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    I'm always interested in discussing new
+                    opportunities, collaborations, or just
+                    chatting about technology.
+                  </p>
                 </div>
               </div>
 
-              {/* Certifications */}
-              <div>
-                <h2 className="text-xl md:text-2xl mb-8">
-                  <span className="text-primary">class</span>{" "}
-                  Certifications{" "}
-                  <span className="text-primary">{"{"}</span>
-                </h2>
-
-                <div className="space-y-6">
-                  {certificates.map((cert, index) => (
-                    <Card
-                      key={index}
-                      className="bg-card border-border p-6 hover:border-primary/50 transition-colors"
-                    >
-                      <div className="space-y-4">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex items-start space-x-3 flex-1">
-                            <Award className="h-5 w-5 text-primary mt-1" />
-                            <div className="flex-1">
-                              <h3 className="text-lg">
-                                {cert.title}
-                              </h3>
-                              <p className="text-muted-foreground">
-                                {cert.issuer}
-                              </p>
-                              <p className="text-sm text-muted-foreground">
-                                {cert.year}
-                              </p>
-                            </div>
-                          </div>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="border-border hover:bg-accent flex-shrink-0"
-                            onClick={() =>
-                              window.open(cert.link, "_blank")
-                            }
-                          >
-                            <ExternalLink className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-
-                <div className="mt-8 text-center">
-                  <span className="text-primary">{"}"}</span>
-                </div>
+              <div className="mt-8 text-center">
+                <span className="text-primary">{"}"}</span>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Contact Me Section */}
-        <section id="contact" className="py-20 px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl md:text-3xl mb-12 text-center">
-              <span className="text-primary">void</span>{" "}
-              contactMe(){" "}
-              <span className="text-primary">{"{"}</span>
-            </h2>
+          {/* Footer */}
+          <footer className="border-t border-border py-12 px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div className="text-center md:text-left">
+                  <p className="text-muted-foreground">
+                    <span className="text-primary">$</span>{" "}
+                    Available for new opportunities
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Based in Pune, India • Open to remote work
+                  </p>
+                </div>
+              </div>
 
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              {contactMethods.map((contact, index) => {
-                const IconComponent = contact.icon;
-                return (
-                  <Card
-                    key={index}
-                    className="bg-card border-border p-6 hover:border-primary/50 transition-colors"
-                  >
-                    <div className="space-y-3">
-                      <div className="flex items-start space-x-3">
-                        <IconComponent className="h-5 w-5 text-primary mt-1" />
-                        <div className="flex-1">
-                          <h3 className="text-lg">
-                            {contact.label}
-                          </h3>
-                          {contact.link ? (
-                            <a
-                              href={contact.link}
-                              className="text-muted-foreground hover:text-primary transition-colors block"
-                              target={
-                                contact.link.startsWith("http")
-                                  ? "_blank"
-                                  : undefined
-                              }
-                              rel={
-                                contact.link.startsWith("http")
-                                  ? "noopener noreferrer"
-                                  : undefined
-                              }
-                            >
-                              {contact.value}
-                            </a>
-                          ) : (
-                            <p className="text-muted-foreground">
-                              {contact.value}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <p className="text-muted-foreground text-sm leading-relaxed ml-8">
-                        {contact.description}
-                      </p>
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
-
-            <div className="text-center space-y-6">
-              <div className="space-y-4">
-                <p className="text-muted-foreground">
-                  <span className="text-primary">printf(</span>
-                  "Let's build something amazing together!"
-                  <span className="text-primary">);</span>
-                </p>
+              <div className="text-center mt-8 pt-8 border-t border-border">
                 <p className="text-sm text-muted-foreground">
-                  I'm always interested in discussing new
-                  opportunities, collaborations, or just
-                  chatting about technology.
+                  <span className="text-primary">
+                    #!/bin/bash
+                  </span>{" "}
+                  • Built with React & Tailwind CSS
                 </p>
               </div>
             </div>
-
-            <div className="mt-8 text-center">
-              <span className="text-primary">{"}"}</span>
-            </div>
-          </div>
-        </section>
-
-        {/* Footer */}
-        <footer className="border-t border-border py-12 px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-              <div className="text-center md:text-left">
-                <p className="text-muted-foreground">
-                  <span className="text-primary">$</span>{" "}
-                  Available for new opportunities
-                </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Based in Pune, India • Open to remote work
-                </p>
-              </div>
-            </div>
-
-            <div className="text-center mt-8 pt-8 border-t border-border">
-              <p className="text-sm text-muted-foreground">
-                <span className="text-primary">
-                  #!/bin/bash
-                </span>{" "}
-                • Built with React & Tailwind CSS
-              </p>
-            </div>
-          </div>
-        </footer>
-      </div>
+          </footer>
+        
+        </div>
     </div>
   );
 }
