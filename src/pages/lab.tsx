@@ -1,6 +1,5 @@
 import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import FooterSection from "../components/FooterSection";
 import TextUtility from "../components/Lab/TextUtils";
 import MonacoNotepad from "../components/Lab/MonacoEditor";
 
@@ -165,90 +164,6 @@ export default function Lab() {
           </div>
         </section>
 
-        {/* AI Projects Section */}
-        <section className="py-20 px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl md:text-3xl mb-12 text-center">
-              <span className="text-primary">class</span>{" "}
-              AI_Experiments{" "}
-              <span className="text-primary">{"{"}</span>
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <Card className="bg-card border-border p-6 hover:border-primary/50 transition-colors">
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <Bot className="h-6 w-6 text-primary" />
-                    <h3 className="text-lg">
-                      Neural Network Visualizer
-                    </h3>
-                  </div>
-                  <p className="text-muted-foreground text-sm">
-                    Interactive visualization tool for
-                    understanding neural network architectures
-                    and training processes.
-                  </p>
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-border hover:bg-accent"
-                    >
-                      <Github className="mr-2 h-4 w-4" />
-                      Code
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-border hover:bg-accent"
-                    >
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      Demo
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-
-              <Card className="bg-card border-border p-6 hover:border-primary/50 transition-colors">
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <Cpu className="h-6 w-6 text-primary" />
-                    <h3 className="text-lg">
-                      Performance Benchmarker
-                    </h3>
-                  </div>
-                  <p className="text-muted-foreground text-sm">
-                    Real-time system performance monitoring with
-                    custom metrics and visualization dashboards.
-                  </p>
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-border hover:bg-accent"
-                    >
-                      <Github className="mr-2 h-4 w-4" />
-                      Code
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-border hover:bg-accent"
-                    >
-                      <Terminal className="mr-2 h-4 w-4" />
-                      CLI Tool
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </div>
-
-            <div className="text-center">
-              <span className="text-primary">{"}"}</span>
-            </div>
-          </div>
-        </section>
-
         {/* Utilities Section */}
         <section className="py-20 px-4">
           <div className="max-w-4xl mx-auto">
@@ -300,10 +215,10 @@ export default function Lab() {
                   </div>
                 </div>
               </Card>
-            </div>
+          </div>
 
-            {/* Utility Modal/Overlay */}
-            {activeUtility && (
+          {/* Utility Modal/Overlay */}
+          {activeUtility && (
               <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
                 <div className="w-full max-w-7xl h-full max-h-[85vh] bg-background rounded-lg border border-border overflow-hidden shadow-2xl flex flex-col">
                   <div className="flex justify-between items-center p-4 border-b border-border bg-card/50 backdrop-blur-sm shrink-0">
@@ -355,6 +270,7 @@ export default function Lab() {
                 </div>
               </div>
             )}
+
           </div>
         </section>
 
@@ -466,8 +382,6 @@ export default function Lab() {
           </div>
         </section>
 
-        {/* Footer */}
-        <FooterSection />
       </div>
     </div>
   );

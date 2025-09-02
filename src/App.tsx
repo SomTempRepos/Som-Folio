@@ -65,7 +65,6 @@ export default function App() {
         window.history.pushState(null, '', window.location.pathname);
       }
     };
-    console.log('Global navigation function set up'); // Debug log
   }, []);
 
   // Handle browser back/forward navigation
@@ -136,14 +135,6 @@ export default function App() {
       }
     }
   }, [currentPage]);
-
-  // Render Lab page
-  if (currentPage === 'lab') {
-    console.log('Rendering Lab page'); // Debug log
-    return <Lab />;
-  }
-
-  console.log('Rendering Portfolio page'); // Debug log
 
   // Render Portfolio page
   return (
