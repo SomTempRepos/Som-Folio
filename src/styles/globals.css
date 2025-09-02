@@ -79,12 +79,6 @@
   --sidebar-border: #333333;
   --sidebar-ring: #00ff41;
 }
-.glass {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(26px) saturate(180%);
-  -webkit-backdrop-filter: blur(26px) saturate(180%);
-}
-
 
 @theme inline {
   --color-background: var(--background);
@@ -220,7 +214,7 @@ html {
 /* Code background pattern */
 .code-bg {
   background-image: 
-    linear-gradient(rgba(0, 255, 65, 0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 65, 0.3) 1px, transparent 1px);
+    linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
   background-size: 20px 20px;
 }

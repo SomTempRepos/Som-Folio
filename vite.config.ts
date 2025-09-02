@@ -50,10 +50,11 @@
       },
     },
     build: {
-      outDir: 'dist'
+      target: 'esnext',
+      outDir: 'build',
     },
     server: {
-      port: 3001,
+      port: 3002,
       open: true,
     },
   });

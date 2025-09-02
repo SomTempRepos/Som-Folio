@@ -1,44 +1,32 @@
-import { Card } from "./components/ui/card";
-import { Button } from "./components/ui/button";
 import { useState, useEffect } from "react";
-import './styles/globals.css'
-import {
-  ExternalLink,
-  Github,
-  Mail,
-  FileText,
-  Code,
-  Database,
-  Server,
-  Terminal,
-  Cpu,
-  Bot,
-  Home,
-  GraduationCap,
-  Award,
-  Phone,
-  Linkedin,
-  Twitter,
-  MapPin,
-  Globe,
-  Sun,
-  Moon,
-} from "lucide-react";
+import "./styles/globals.css";
+import { rotatingTexts } from "./data/portfolioData";
+import Navbar from "./components/Navbar";
+import HeroSection from "./components/HeroSection";
+import SkillsSection from "./components/SkillsSection";
+import ProjectsSection from "./components/ProjectsSection";
+import EducationSection from "./components/EducationSection";
+import ContactSection from "./components/ContactSection";
+import FooterSection from "./components/FooterSection";
+import Lab from "./pages/lab";
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState<'home' | 'lab'>('home');
 
-  const rotatingTexts = [
-    "Brewing AI elixirs with TensorFlow and PyTorch—sometimes it's wizardry, sometimes it's mad science, occasionally it even obeys.",
-    "Summoning neural networks like Dumbledore conjures Fawkes, with TensorFlow wands and PyTorch potions at my command.",
-    "Cooking up AI models in the lab—Breaking Bad style—but instead of blue meth, it's pure deep learning magic.",
-    "Casting spells in Python, chanting TensorFlow, and invoking PyTorch—because even Gandalf would approve of well-trained models.",
-    "AI whisperer: teaching GPUs to levitate data, making neural nets obey like Hogwarts first-years in detention.",
-  ];
-
-  // Initialize theme from localStorage or default to dark
+  // Initialize page from URL and theme from localStorage
   useEffect(() => {
+    // Check URL for page parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageParam = urlParams.get('page');
+    if (pageParam === 'lab') {
+      setCurrentPage('lab');
+    } else if (window.location.pathname === '/lab') {
+      setCurrentPage('lab');
+    }
+
+    // Initialize theme
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
       setIsDarkMode(savedTheme === "dark");
@@ -59,140 +47,47 @@ export default function App() {
       setCurrentTextIndex(
         (prevIndex) => (prevIndex + 1) % rotatingTexts.length,
       );
-    }, 5000); // Change text every 4 seconds
+    }, 5000); // Change text every 5 seconds
 
     return () => clearInterval(interval);
-  }, [rotatingTexts.length]);
+  }, []);
+
+  // Make navigation available globally and handle URL updates
+  useEffect(() => {
+    (window as any).navigateTo = (page: 'home' | 'lab') => {
+      console.log('Global navigation called with:', page); // Debug log
+      setCurrentPage(page);
+      
+      // Update URL without page refresh
+      if (page === 'lab') {
+        window.history.pushState(null, '', '?page=lab');
+      } else {
+        window.history.pushState(null, '', window.location.pathname);
+      }
+    };
+    console.log('Global navigation function set up'); // Debug log
+  }, []);
+
+  // Handle browser back/forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const pageParam = urlParams.get('page');
+      if (pageParam === 'lab') {
+        setCurrentPage('lab');
+      } else {
+        setCurrentPage('home');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   //Dark/Light Mode Theme
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
-
-  //Skills Secton
-  const skills = [
-    { name: "C", icon: Code },
-    { name: "C++", icon: Code },
-    { name: "Python", icon: Code },
-    { name: "GoLang", icon: Code },
-    { name: "Linux & LDD", icon: Terminal },
-    { name: "Embedded AI", icon: Bot },
-    { name: "ESP32/Arduino", icon: Cpu },
-    { name: "FastAPI/Flask", icon: Server },
-    { name: "MySQL/MongoDB", icon: Database },
-  ];
-
-  //Project Section -> Linear order list
-  const projects = [
-    {
-      title: "Hybrid Traffic Violation Detection",
-      description:
-        "Traffic Light & Zebra Crossing Detection with Violation Monitoring using YOLO V8. Quantized TFLite Model Pipeline for Embedded ML",
-      tech: [
-        "YOLO v8/PyTorch",
-        "OpenCV/NumPy/Matplotlib",
-        "Python, Flask",
-        "JSON(API comms)",
-        "OpenCV/NumPy/Matplotlib",
-        "TensorFlow Lite",
-        "CNN",
-        "Quantization",
-      ],
-      github: "https://github.com/Somnathjha007/Traffic-Violation-Detector-YOLOv8",
-      demo: null,
-    },
-    {
-      title: "Edge to Cloud Image Pipeline",
-      description:
-        "Implemented edge device image capture with cloud-based Flask server. Integrated with FlaskAPI endpoint for scalable data collection",
-      tech: [
-        "ESP32-S3",
-        "Embedded C",
-        "Flask",
-        "Python",
-        "REST API",
-        "cURL",
-        "Git/Github",
-      ],
-      github: "https://github.com/Somnathjha007/Edge-to-Cloud-Image-Pipeline",
-      demo: null,
-    },
-    {
-      title: "Upcoming",
-      description:
-        "Under Devlopment -> Wizards are working , spells are being casted",
-      tech: [
-        "Magic",
-        "pixy dust",
-        "Prof Snape",
-        "Holy Water",
-        
-      ],
-      github: "#",
-      demo: null,
-    },
-  ];
-
-  //Education Section -> Linear order list
-  const education = [
-    {
-      degree:
-        "B.Tech",
-      description: "Electronics and Communication Engineering",
-    },
-    {
-      degree: "Higher Secondary",
-      description: "Non-Medical",
-    },
-  ];
-
-  // Certificate Section -> Linear order list
-  const certificates = [
-    {
-      title: "LINUX for Cloud",
-      issuer: "Udemy",
-      year: "2025",
-      link: "https://www.udemy.com/certificate/UC-263a3ce9-5cdd-467c-a960-95bf52e237e0/",
-    },
-    {
-      title: "Git and Github Essentials",
-      issuer: "Udemy",
-      year: "2025",
-      link: "https://www.udemy.com/certificate/UC-f48b7341-ed77-45ea-9258-4de66d32b90d/",
-    },
-  ];
-  //Contact Me
-  const contactMethods = [
-    {
-      label: "Email",
-      value: "somnath.jha.official@gmail.com",
-      icon: Mail,
-      link: "mailto:somnath.jha.official@gmail.com",
-      description: "Drop me a line anytime",
-    },
-    {
-      label: "LinkedIn",
-      value: "/in/somnath-jhaa",
-      icon: Linkedin,
-      link: "https://linkedin.com/in/somnath-jhaa",
-      description: "Professional network",
-    },
-    {
-      label: "GitHub",
-      value: "@somnathjha007",
-      icon: Github,
-      link: "https://github.com/somnathjha007",
-      description: "Check out my code",
-    },
-    {
-      label: "Location",
-      value: "Pune, India",
-      icon: MapPin,
-      link: null,
-      description: "Open to opportunities",
-    },
-  ];
-
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -207,429 +102,75 @@ export default function App() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  // Navigation function - opens LAB in new tab
+  const navigateToLab = () => {
+    const labUrl = `${window.location.origin}${window.location.pathname}?page=lab`;
+    window.open(labUrl, '_blank');
+  };
+
+  const navigateToHome = () => {
+    setCurrentPage('home');
+    window.history.pushState(null, '', window.location.pathname);
+  };
+
+  // Update document title and favicon based on current page
+  useEffect(() => {
+    if (currentPage === 'lab') {
+      document.title = 'Som.LAB - Experimental Digital Playground';
+      // Update favicon for lab page
+      let favicon = document.querySelector("link[rel*='icon']") as HTMLLinkElement;
+      if (!favicon) {
+        favicon = document.createElement('link');
+        favicon.rel = 'icon';
+        document.head.appendChild(favicon);
+      }
+      // Use a terminal icon for lab (you can replace with actual favicon)
+      favicon.href = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2300ff41"><path d="M2 3h20c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H2c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2zm0 2v14h20V5H2zm2 2h2v2H4V7zm4 0h2v2H8V7zm-4 4h2v2H4v-2zm4 0h8v2H8v-2z"/></svg>';
+    } else {
+      document.title = 'Som.dev - Backend Developer Portfolio';
+      // Reset to default favicon
+      let favicon = document.querySelector("link[rel*='icon']") as HTMLLinkElement;
+      if (favicon) {
+        favicon.href = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2300ff41"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>';
+      }
+    }
+  }, [currentPage]);
+
+  // Render Lab page
+  if (currentPage === 'lab') {
+    console.log('Rendering Lab page'); // Debug log
+    return <Lab />;
+  }
+
+  console.log('Rendering Portfolio page'); // Debug log
+
+  // Render Portfolio page
   return (
     <div
       className={`${isDarkMode ? "dark" : ""} min-h-screen bg-background text-foreground`}
-      >
-        {/* Subtle code background */}
-        <div className="fixed inset-0 code-bg opacity-30 pointer-events-none z-0" />
-        
-        {/* Fixed Navbar */}
-        <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/20 shadow-lg backdrop-blur-lg bg-white/10 dark:bg-black/20">
-          <div className="max-w-4xl mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-1">
-                <span className="text-primary">$</span>
-                <span className="text-lg">Som.dev</span>
-              </div>
+    >
+      {/* Subtle code background */}
+      <div className="fixed inset-0 code-bg opacity-30 pointer-events-none z-0" />
 
-              <div className="flex items-center space-x-6">
-                <button
-                  onClick={() => scrollToSection("home")}
-                  className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Home className="h-4 w-4" />
-                  <span>Home</span>
-                </button>
+      <Navbar 
+        isDarkMode={isDarkMode}
+        toggleTheme={toggleTheme}
+        scrollToSection={scrollToSection}
+        scrollToContact={scrollToContact}
+      />
 
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={scrollToContact}
-                  className="border-white/30 hover:bg-white/20 hover:border-primary/50"
-                >
-                  <Mail className="mr-2 h-4 w-4" />
-                  Contact
-                </Button>
-
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={toggleTheme}
-                  className="hover:bg-white/20 hover:text-primary"
-                  aria-label="Toggle theme"
-                >
-                  {isDarkMode ? (
-                    <Sun className="h-4 w-4" />
-                  ) : (
-                    <Moon className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-            </div>
-          </div>
-        </nav>
-
-        
-        <div className="relative z-10 pt-20">
-
-          {/* Hero Section */}
-          <section
-            id="home"
-            className="min-h-screen flex items-center justify-center px-4"
-          >
-            <div className="max-w-4xl mx-auto text-center space-y-8">
-              <div className="space-y-4">
-                <h1 className="text-4xl md:text-6xl tracking-tight">
-                  <span className="text-primary">$</span> Somnath
-                  Jha<span className="cursor md:text-6xl tracking-tight"></span>
-                </h1>
-                <h2 className="text-xl md:text-2xl text-muted-foreground">
-                  Backend Developer & Systems Engineer
-                </h2>
-                <div className="space-y-4 max-w-2xl mx-auto">
-                  <p className="text-base md:text-lg text-muted-foreground">
-                    Software engineer fluent in embedded sorcery,
-                    backend alchemy, and Linux whispering.
-                  </p>
-                  <Card className="bg-card border-border p-4 hover:border-primary/50 transition-colors">
-                  <p className="text-sm md:text-base text-muted-foreground/80 transition-opacity duration-500 min-h-[3rem] flex items-center justify-center">
-                    {rotatingTexts[currentTextIndex]}
-                  </p>
-                  </Card>
-                </div>
-              </div>
-
-              <div className="flex gap-4 justify-center items-center">
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  className="hover:bg-accent hover:text-primary"
-                  onClick={() =>
-                    window.open(
-                      "mailto:somnath.jha.official@gmail.com",
-                      "_blank",
-                    )
-                  }
-                >
-                  <Mail className="h-6 w-6" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  className="hover:bg-accent hover:text-primary"
-                  onClick={() =>
-                    window.open(
-                      "https://linkedin.com/in/somnath-jhaa",
-                      "_blank",
-                    )
-                  }
-                >
-                  <Linkedin className="h-6 w-6" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  className="hover:bg-accent hover:text-primary"
-                  onClick={() =>
-                    window.open(
-                      "https://github.com/somnathjha007",
-                      "_blank",
-                    )
-                  }
-                >
-                  <Github className="h-6 w-6" />
-                </Button>
-              </div>
-            </div>
-          </section>
-
-          {/* Skills Section */}
-          <section className="py-20 px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-2xl md:text-3xl mb-12 text-center">
-                <span className="text-primary">//</span> Technical
-                Skills
-              </h2>
-
-              <div className="flex flex-wrap justify-center gap-3">
-                {skills.map((skill, index) => {
-                  const IconComponent = skill.icon;
-                  return (
-                    <div
-                      key={index}
-                      className="flex items-center space-x-2 px-4 py-2 bg-card border border-border rounded-full hover:border-primary/50 transition-colors"
-                    >
-                      <IconComponent className="h-4 w-4 text-primary" />
-                      <span className="text-sm">
-                        {skill.name}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-
-          {/* Projects Section */}
-          <section className="py-20 px-4">
-              <div className="max-w-4xl mx-auto">
-                <h2 className="text-2xl md:text-3xl mb-12 text-center">
-                  <span className="text-primary">/* </span>
-                  Projects <span className="text-primary">*/</span>
-                </h2>
-
-                <div className="space-y-8">
-                  {projects.map((project, index) => (
-                    <Card
-                      key={index}
-                      className="bg-card border-border p-6 hover:border-primary/50 transition-colors"
-                    >
-                      <div className="space-y-4">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                          <h3 className="text-xl">{project.title}</h3>
-                          <div className="flex gap-2">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="border-border hover:bg-accent"
-                              onClick={() =>
-                                project.github && window.open(project.github, "_blank")
-                              }
-                            >
-                              <Github className="mr-2 h-4 w-4" />
-                              Code
-                            </Button>
-                            {project.demo && (
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="border-border hover:bg-accent"
-                              >
-                                <ExternalLink className="mr-2 h-4 w-4" />
-                                Demo
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* 🔹 Description as bullet points */}
-                        <ul className="list-disc list-inside text-muted-foreground leading-relaxed space-y-1">
-                          {project.description.split(".").map(
-                            (point, idx) =>
-                              point.trim() && <li key={idx}>{point.trim()}</li>
-                          )}
-                        </ul>
-
-                        {/* 🔹 Tech Stack subheading */}
-                        <h4 className="text-lg  mt-4">Tech Stack:</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {project.tech.map((tech, techIndex) => (
-                            <span
-                              key={techIndex}
-                              className="px-3 py-1 bg-muted text-muted-foreground text-sm rounded border border-border"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-          </section>
-
-
-          {/* Education and Certifications Section */}
-          <section className="py-20 px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-                {/* Education */}
-                <div className="w-full">
-                  <h2 className="text-xl md:text-2xl mb-8">
-                    <span className="text-primary">class</span>{" "}
-                    Education{" "}
-                    <span className="text-primary">{"{"}</span>
-                  </h2>
-
-                  <div className="space-y-6">
-                    {education.map((edu, index) => (
-                      <Card
-                        key={index}
-                        className="bg-card border-border p-6 hover:border-primary/50 transition-colors w-full"
-                      >
-                        <div className="space-y-3">
-                          <div className="flex items-start space-x-3">
-                            <GraduationCap className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <h3 className="text-lg break-words">
-                                {edu.degree}
-                              </h3>
-                            </div>
-                          </div>
-                          <p className="text-muted-foreground text-sm leading-relaxed ml-8 break-words">
-                            {edu.description}
-                          </p>
-                        </div>
-                      </Card>
-                    ))}
-                  </div>
-
-                  <div className="mt-8 text-center">
-                    <span className="text-primary">{"}"}</span>
-                  </div>
-                </div>
-
-                {/* Certifications */}
-                <div className="w-full">
-                  <h2 className="text-xl md:text-2xl mb-8">
-                    <span className="text-primary">class</span>{" "}
-                    Certifications{" "}
-                    <span className="text-primary">{"{"}</span>
-                  </h2>
-
-                  <div className="space-y-6">
-                    {certificates.map((cert, index) => (
-                      <Card
-                        key={index}
-                        className="bg-card border-border p-6 hover:border-primary/50 transition-colors w-full"
-                      >
-                        <div className="space-y-4">
-                          <div className="flex items-start justify-between gap-4">
-                            <div className="flex items-start space-x-3 flex-1 min-w-0">
-                              <Award className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                              <div className="flex-1 min-w-0">
-                                <h3 className="text-lg break-words">
-                                  {cert.title}
-                                </h3>
-                                <p className="text-muted-foreground break-words">
-                                  {cert.issuer}
-                                </p>
-                                <p className="text-sm text-muted-foreground">
-                                  {cert.year}
-                                </p>
-                              </div>
-                            </div>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="border-border hover:bg-accent flex-shrink-0"
-                              onClick={() =>
-                                window.open(cert.link, "_blank")
-                              }
-                            >
-                              <ExternalLink className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </div>
-                      </Card>
-                    ))}
-                  </div>
-
-                  <div className="mt-8 text-center">
-                    <span className="text-primary">{"}"}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Contact Me Section */}
-          <section id="contact" className="py-20 px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-2xl md:text-3xl mb-12 text-center">
-                <span className="text-primary">void</span>{" "}
-                contactMe(){" "}
-                <span className="text-primary">{"{"}</span>
-              </h2>
-
-              <div className="grid md:grid-cols-2 gap-6 mb-8">
-                {contactMethods.map((contact, index) => {
-                  const IconComponent = contact.icon;
-                  return (
-                    <Card
-                      key={index}
-                      className="bg-card border-border p-6 hover:border-primary/50 transition-colors"
-                    >
-                      <div className="space-y-3">
-                        <div className="flex items-start space-x-3">
-                          <IconComponent className="h-5 w-5 text-primary mt-1" />
-                          <div className="flex-1">
-                            <h3 className="text-lg">
-                              {contact.label}
-                            </h3>
-                            {contact.link ? (
-                              <a
-                                href={contact.link}
-                                className="text-muted-foreground hover:text-primary transition-colors block"
-                                target={
-                                  contact.link.startsWith("http")
-                                    ? "_blank"
-                                    : undefined
-                                }
-                                rel={
-                                  contact.link.startsWith("http")
-                                    ? "noopener noreferrer"
-                                    : undefined
-                                }
-                              >
-                                {contact.value}
-                              </a>
-                            ) : (
-                              <p className="text-muted-foreground">
-                                {contact.value}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                        <p className="text-muted-foreground text-sm leading-relaxed ml-8">
-                          {contact.description}
-                        </p>
-                      </div>
-                    </Card>
-                  );
-                })}
-              </div>
-
-              <div className="text-center space-y-6">
-                <div className="space-y-4">
-                  <p className="text-muted-foreground">
-                    <span className="text-primary">printf(</span>
-                    "Let's build something amazing together!"
-                    <span className="text-primary">);</span>
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    I'm always interested in discussing new
-                    opportunities, collaborations, or just
-                    chatting about technology.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-8 text-center">
-                <span className="text-primary">{"}"}</span>
-              </div>
-            </div>
-          </section>
-
-          {/* Footer */}
-          <footer className="border-t border-border py-12 px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-                <div className="text-center md:text-left">
-                  <p className="text-muted-foreground">
-                    <span className="text-primary">$</span>{" "}
-                    Available for new opportunities
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Based in Pune, India • Open to remote work
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-center mt-8 pt-8 border-t border-border">
-                <p className="text-sm text-muted-foreground">
-                  <span className="text-primary">
-                    #!/bin/bash
-                  </span>{" "}
-                  • Built with React & Tailwind CSS
-                </p>
-              </div>
-            </div>
-          </footer>
-        
-        </div>
+      <div className="relative z-10 pt-20">
+        <HeroSection 
+          currentTextIndex={currentTextIndex} 
+          navigateToLab={navigateToLab}
+        />
+        <SkillsSection />
+        <ProjectsSection />
+        <EducationSection />
+        <ContactSection />
+        <FooterSection />
+      </div>
     </div>
   );
 }
